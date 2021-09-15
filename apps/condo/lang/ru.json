@@ -145,6 +145,7 @@
   "menu.Acquiring": "Эквайринг",
   "menu.TicketAnalytics": "Аналитика по заявкам",
   "menu.ContactCenter": "Контакт центр",
+  "menu.PaymentsRegister": "Реестр оплат",
   "menu.Meters": "ИПУ",
   "MinutesShort": "${minutes} мин.",
   "RolesAndAccess": "Роли и доступы",
