@@ -18,6 +18,8 @@ import { EmptyTableCell } from './EmptyTableCell'
 import { Property } from '@app/condo/schema'
 import { getAddressDetails } from '../../utils/helpers'
 import { EllipsisConfig } from 'antd/es/typography/Base'
+import { TableRecord } from './Index'
+import get from 'lodash/get'
 
 type RenderReturnType = string | React.ReactNode
 
@@ -240,5 +242,31 @@ export const getMoneyRender = (
                 />
             </>
         )
+    }
+}
+
+export const getAddressRender = (unitNamePrefix: string, search?: string) => {
+    return function render (record: TableRecord): React.ReactNode {
+        const unitName = get(record, 'unitName')
+        const address = get(record, 'address')
+        const unitPrefix = unitName ? `${unitNamePrefix} ${unitName}` : ''
+
+        if (!isEmpty(search)) {
+            return (
+                <>
+                    <TextHighlighter
+                        text={address}
+                        search={String(search)}
+                        renderPart={(part, index, marked) => (
+                            <Typography.Text style={{ backgroundColor:  marked ? colors.markColor : 'transparent' }}>
+                                {part}
+                            </Typography.Text>
+                        )}
+                    />
+                    {`, ${unitPrefix}`}
+                </>
+            )
+        }
+        return `${address}, ${unitPrefix}`
     }
 }
