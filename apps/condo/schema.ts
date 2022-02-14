@@ -29142,6 +29142,10 @@ export enum SortTicketChangesBy {
   IsWarrantyFromDesc = 'isWarrantyFrom_DESC',
   IsWarrantyToAsc = 'isWarrantyTo_ASC',
   IsWarrantyToDesc = 'isWarrantyTo_DESC',
+  CanReadByResidentFromAsc = 'canReadByResidentFrom_ASC',
+  CanReadByResidentFromDesc = 'canReadByResidentFrom_DESC',
+  CanReadByResidentToAsc = 'canReadByResidentTo_ASC',
+  CanReadByResidentToDesc = 'canReadByResidentTo_DESC',
   PropertyAddressFromAsc = 'propertyAddressFrom_ASC',
   PropertyAddressFromDesc = 'propertyAddressFrom_DESC',
   PropertyAddressToAsc = 'propertyAddressTo_ASC',
@@ -29535,6 +29539,8 @@ export enum SortTicketHistoryRecordsBy {
   IsEmergencyDesc = 'isEmergency_DESC',
   IsWarrantyAsc = 'isWarranty_ASC',
   IsWarrantyDesc = 'isWarranty_DESC',
+  CanReadByResidentAsc = 'canReadByResident_ASC',
+  CanReadByResidentDesc = 'canReadByResident_DESC',
   PropertyAddressAsc = 'propertyAddress_ASC',
   PropertyAddressDesc = 'propertyAddress_DESC',
   SectionNameAsc = 'sectionName_ASC',
@@ -29800,6 +29806,8 @@ export enum SortTicketsBy {
   IsEmergencyDesc = 'isEmergency_DESC',
   IsWarrantyAsc = 'isWarranty_ASC',
   IsWarrantyDesc = 'isWarranty_DESC',
+  CanReadByResidentAsc = 'canReadByResident_ASC',
+  CanReadByResidentDesc = 'canReadByResident_DESC',
   PropertyAsc = 'property_ASC',
   PropertyDesc = 'property_DESC',
   PropertyAddressAsc = 'propertyAddress_ASC',
@@ -30076,6 +30084,8 @@ export type Ticket = {
   isEmergency?: Maybe<Scalars['Boolean']>;
   /**  Indicates the ticket is warranty  */
   isWarranty?: Maybe<Scalars['Boolean']>;
+  /**  Determines if a resident in the mobile app can see the ticket created in crm  */
+  canReadByResident?: Maybe<Scalars['Boolean']>;
   /**  Extra analytics not related to remote system  */
   meta?: Maybe<Scalars['JSON']>;
   /**  Property related to the Ticket  */
@@ -30569,6 +30579,10 @@ export type TicketChange = {
   isWarrantyFrom?: Maybe<Scalars['Boolean']>;
   /**  Indicates the ticket is warranty  */
   isWarrantyTo?: Maybe<Scalars['Boolean']>;
+  /**  Determines if a resident in the mobile app can see the ticket created in crm  */
+  canReadByResidentFrom?: Maybe<Scalars['Boolean']>;
+  /**  Determines if a resident in the mobile app can see the ticket created in crm  */
+  canReadByResidentTo?: Maybe<Scalars['Boolean']>;
   /**  Extra analytics not related to remote system  */
   metaFrom?: Maybe<Scalars['JSON']>;
   /**  Extra analytics not related to remote system  */
@@ -30753,6 +30767,8 @@ export type TicketChangeCreateInput = {
   isEmergencyTo?: Maybe<Scalars['Boolean']>;
   isWarrantyFrom?: Maybe<Scalars['Boolean']>;
   isWarrantyTo?: Maybe<Scalars['Boolean']>;
+  canReadByResidentFrom?: Maybe<Scalars['Boolean']>;
+  canReadByResidentTo?: Maybe<Scalars['Boolean']>;
   metaFrom?: Maybe<Scalars['JSON']>;
   metaTo?: Maybe<Scalars['JSON']>;
   propertyAddressFrom?: Maybe<Scalars['String']>;
@@ -30862,6 +30878,8 @@ export type TicketChangeUpdateInput = {
   isEmergencyTo?: Maybe<Scalars['Boolean']>;
   isWarrantyFrom?: Maybe<Scalars['Boolean']>;
   isWarrantyTo?: Maybe<Scalars['Boolean']>;
+  canReadByResidentFrom?: Maybe<Scalars['Boolean']>;
+  canReadByResidentTo?: Maybe<Scalars['Boolean']>;
   metaFrom?: Maybe<Scalars['JSON']>;
   metaTo?: Maybe<Scalars['JSON']>;
   propertyAddressFrom?: Maybe<Scalars['String']>;
@@ -31216,6 +31234,10 @@ export type TicketChangeWhereInput = {
   isWarrantyFrom_not?: Maybe<Scalars['Boolean']>;
   isWarrantyTo?: Maybe<Scalars['Boolean']>;
   isWarrantyTo_not?: Maybe<Scalars['Boolean']>;
+  canReadByResidentFrom?: Maybe<Scalars['Boolean']>;
+  canReadByResidentFrom_not?: Maybe<Scalars['Boolean']>;
+  canReadByResidentTo?: Maybe<Scalars['Boolean']>;
+  canReadByResidentTo_not?: Maybe<Scalars['Boolean']>;
   metaFrom?: Maybe<Scalars['JSON']>;
   metaFrom_not?: Maybe<Scalars['JSON']>;
   metaFrom_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
@@ -33143,6 +33165,7 @@ export type TicketCreateInput = {
   isPaid?: Maybe<Scalars['Boolean']>;
   isEmergency?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   property?: Maybe<PropertyRelateToOneInput>;
   propertyAddress?: Maybe<Scalars['String']>;
@@ -33907,6 +33930,7 @@ export type TicketHistoryRecord = {
   isPaid?: Maybe<Scalars['Boolean']>;
   isEmergency?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   property?: Maybe<Scalars['String']>;
   propertyAddress?: Maybe<Scalars['String']>;
@@ -33958,6 +33982,7 @@ export type TicketHistoryRecordCreateInput = {
   isPaid?: Maybe<Scalars['Boolean']>;
   isEmergency?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   property?: Maybe<Scalars['String']>;
   propertyAddress?: Maybe<Scalars['String']>;
@@ -34014,6 +34039,7 @@ export type TicketHistoryRecordUpdateInput = {
   isPaid?: Maybe<Scalars['Boolean']>;
   isEmergency?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   property?: Maybe<Scalars['String']>;
   propertyAddress?: Maybe<Scalars['String']>;
@@ -34234,6 +34260,8 @@ export type TicketHistoryRecordWhereInput = {
   isEmergency_not?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
   isWarranty_not?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
+  canReadByResident_not?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   meta_not?: Maybe<Scalars['JSON']>;
   meta_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
@@ -35937,6 +35965,7 @@ export type TicketUpdateInput = {
   isPaid?: Maybe<Scalars['Boolean']>;
   isEmergency?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   property?: Maybe<PropertyRelateToOneInput>;
   propertyAddress?: Maybe<Scalars['String']>;
@@ -36138,6 +36167,8 @@ export type TicketWhereInput = {
   isEmergency_not?: Maybe<Scalars['Boolean']>;
   isWarranty?: Maybe<Scalars['Boolean']>;
   isWarranty_not?: Maybe<Scalars['Boolean']>;
+  canReadByResident?: Maybe<Scalars['Boolean']>;
+  canReadByResident_not?: Maybe<Scalars['Boolean']>;
   meta?: Maybe<Scalars['JSON']>;
   meta_not?: Maybe<Scalars['JSON']>;
   meta_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
