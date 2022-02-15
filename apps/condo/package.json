@@ -18,7 +18,8 @@
     "createservice": "node ./../../bin/createservice",
     "createschema": "node ./../../bin/createschema",
     "lint-schema": "NODE_ENV=test node ./../../bin/lint-schema.js",
-    "lint-i18n-translations": "node ./../../bin/lint-i18n-translations.js"
+    "lint-i18n-translations": "node ./../../bin/lint-i18n-translations.js",
+    "upload-test": "node ./bin/uploadTest.js"
   },
   "dependencies": {
     "@2gis/mapgl": "^1.12.0",
@@ -51,6 +52,7 @@
     "ajv-formats": "^2.1.0",
     "antd": "^4.8.2",
     "antd-mask-input": "^0.1.15",
+    "apollo-boost": "^0.4.9",
     "big.js": "^6.1.1",
     "bull": "^3.22.0",
     "bull-repl": "^0.26.3",
