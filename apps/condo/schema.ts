@@ -13431,16 +13431,241 @@ export type Mutation = {
   deletePayment?: Maybe<Payment>;
   /**  Delete multiple Payment items by ID.  */
   deletePayments?: Maybe<Array<Maybe<Payment>>>;
+  /**
+   * Registers new user and sends notification
+   *
+   * User will be registered only in case of correct provided token of phone confirmation action. After successful registration, phone confirmation action will be marked as completed and will not be allowed for further usage
+   *
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "mutation": "registerNewUser",
+   *   "variable": [
+   *     "data",
+   *     "confirmPhoneActionToken"
+   *   ],
+   *   "message": "Unable to find confirm phone action"
+   * }`
+   *
+   * `{
+   *   "mutation": "registerNewUser",
+   *   "variable": [
+   *     "data",
+   *     "phone"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "WRONG_FORMAT",
+   *   "message": "Wrong format of provided phone number",
+   *   "correctExample": "+79991234567"
+   * }`
+   *
+   * `{
+   *   "mutation": "registerNewUser",
+   *   "variable": [
+   *     "data",
+   *     "password"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "WRONG_FORMAT",
+   *   "message": "Password length is less then {min} characters",
+   *   "messageForUser": "api.user.registerNewUser.PASSWORD_IS_TOO_SHORT",
+   *   "messageInterpolation": {
+   *     "min": 8
+   *   }
+   * }`
+   *
+   * `{
+   *   "mutation": "registerNewUser",
+   *   "variable": [
+   *     "data",
+   *     "phone"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "NOT_UNIQUE",
+   *   "message": "User with specified phone already exists"
+   * }`
+   *
+   * `{
+   *   "mutation": "registerNewUser",
+   *   "variable": [
+   *     "data",
+   *     "email"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "NOT_UNIQUE",
+   *   "message": "User with specified email already exists"
+   * }`
+   *
+   * `{
+   *   "mutation": "registerNewUser",
+   *   "code": "INTERNAL_ERROR",
+   *   "message": "Unable to create user"
+   * }`
+   */
   registerNewUser?: Maybe<User>;
   authenticateUserWithPhoneAndPassword?: Maybe<AuthenticateUserWithPhoneAndPasswordOutput>;
+  /**
+   * Beginning of a multi-step process of a password recovery.
+   * 1. Start recovery and get token to confirm phone number
+   * 2. Confirm phone number
+   * 3. Call `changePasswordWithToken` mutation
+   *
+   *
+   *
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "mutation": "startPasswordRecovery",
+   *   "variable": [
+   *     "data",
+   *     "phone"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "USER_BY_PHONE_NOT_FOUND",
+   *   "message": "Unable to find user with specified phone"
+   * }`
+   *
+   * `{
+   *   "mutation": "startPasswordRecovery",
+   *   "variable": [
+   *     "data",
+   *     "phone"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "MULTIPLE_USERS_FOUND",
+   *   "message": "Unable to find exact one user to start password recovery"
+   * }`
+   */
   startPasswordRecovery?: Maybe<StartPasswordRecoveryOutput>;
+  /**
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "mutation": "changePasswordWithToken",
+   *   "variable": [
+   *     "data",
+   *     "password"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "PASSWORD_IS_TOO_SHORT",
+   *   "message": "Password length is less then {min} characters",
+   *   "messageForUser": "api.user.changePasswordWithToken.PASSWORD_IS_TOO_SHORT",
+   *   "messageInterpolation": {
+   *     "min": 8
+   *   }
+   * }`
+   *
+   * `{
+   *   "mutation": "changePasswordWithToken",
+   *   "variable": [
+   *     "data",
+   *     "token"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "TOKEN_NOT_FOUND",
+   *   "message": "Unable to find non-expired ConfirmPhoneAction by specified token",
+   *   "messageForUser": "api.user.changePasswordWithToken.TOKEN_NOT_FOUND"
+   * }`
+   *
+   * `{
+   *   "mutation": "changePasswordWithToken",
+   *   "variable": [
+   *     "data",
+   *     "phone"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "USER_NOT_FOUND",
+   *   "message": "Unable to find user with specified phone"
+   * }`
+   */
   changePasswordWithToken?: Maybe<ChangePasswordWithTokenOutput>;
   startConfirmPhoneAction?: Maybe<StartConfirmPhoneActionOutput>;
   resendConfirmPhoneActionSms?: Maybe<ResendConfirmPhoneActionSmsOutput>;
   completeConfirmPhoneAction?: Maybe<CompleteConfirmPhoneActionOutput>;
+  /**
+   * Authenticates resident user for mobile apps
+   *
+   *
+   *
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "mutation": "signinResidentUser",
+   *   "variable": [
+   *     "data",
+   *     "token"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "TOKEN_NOT_FOUND",
+   *   "message": "Unable to find a non-expired confirm phone action, that corresponds to provided token"
+   * }`
+   *
+   * `{
+   *   "code": "INTERNAL_ERROR",
+   *   "mutation": "signinResidentUser",
+   *   "message": "Something went wrong while trying to create a User record"
+   * }`
+   */
   signinResidentUser?: Maybe<SigninResidentUserOutput>;
+  /**
+   * Changes a phone of a resident, that corresponds to confirmed phone number, specified via token
+   *
+   *
+   *
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "NOT_FOUND",
+   *   "mutation": "changePhoneNumberResidentUser",
+   *   "message": "Unable to find a non-expired confirm phone action, that corresponds to provided token",
+   *   "variable": [
+   *     "data",
+   *     "token"
+   *   ]
+   * }`
+   */
   changePhoneNumberResidentUser?: Maybe<ChangePhoneNumberResidentUserOutput>;
+  /**
+   * Authenticates as an another user to be able to see the system, as it does
+   *
+   * You cannot authenticate for another admin or support or whatever kind of a non-client user
+   *
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "mutation": "signinAsUser",
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "USER_NOT_FOUND",
+   *   "message": "Could not find a user with a specified id"
+   * }`
+   *
+   * `{
+   *   "mutation": "signinAsUser",
+   *   "code": "FORBIDDEN",
+   *   "message": "You cannot authenticate for an another admin user"
+   * }`
+   *
+   * `{
+   *   "mutation": "signinAsUser",
+   *   "code": "FORBIDDEN",
+   *   "message": "You cannot authenticate for an another support user"
+   * }`
+   */
   signinAsUser?: Maybe<SigninAsUserOutput>;
+  registerNewServiceUser?: Maybe<RegisterNewServiceUserOutput>;
   registerNewOrganization?: Maybe<Organization>;
   inviteNewOrganizationEmployee?: Maybe<OrganizationEmployee>;
   reInviteOrganizationEmployee?: Maybe<OrganizationEmployee>;
@@ -16611,6 +16836,11 @@ export type MutationChangePhoneNumberResidentUserArgs = {
 
 export type MutationSigninAsUserArgs = {
   data: SigninAsUserInput;
+};
+
+
+export type MutationRegisterNewServiceUserArgs = {
+  data: RegisterNewServiceUserInput;
 };
 
 
@@ -21758,6 +21988,26 @@ export type Query = {
   _PaymentsMeta?: Maybe<_ListMeta>;
   /**  Retrieve the meta-data for all lists.  */
   _ksListsMeta?: Maybe<Array<Maybe<_ListMeta>>>;
+  /**
+   * Tells, whether specified password recovery token is exists and not expired
+   *
+   *
+   *
+   * **Errors**
+   *
+   * Following objects will be presented in `extensions` property of thrown error
+   *
+   * `{
+   *   "mutation": "checkPasswordRecoveryToken",
+   *   "variable": [
+   *     "data",
+   *     "token"
+   *   ],
+   *   "code": "BAD_USER_INPUT",
+   *   "type": "TOKEN_NOT_FOUND",
+   *   "message": "Unable to find non-expired token"
+   * }`
+   */
   checkPasswordRecoveryToken?: Maybe<CheckPasswordRecoveryTokenOutput>;
   getPhoneByConfirmPhoneActionToken?: Maybe<GetPhoneByConfirmPhoneActionTokenOutput>;
   checkPropertyWithAddressExist?: Maybe<CheckPropertyWithAddressExistOutput>;
@@ -24386,6 +24636,21 @@ export type RegisterNewOrganizationInput = {
   description?: Maybe<Scalars['String']>;
   meta: Scalars['JSON'];
   avatar?: Maybe<Scalars['Upload']>;
+};
+
+export type RegisterNewServiceUserInput = {
+  dv: Scalars['Int'];
+  sender: SenderFieldInput;
+  name: Scalars['String'];
+  email: Scalars['String'];
+  meta?: Maybe<Scalars['JSON']>;
+};
+
+export type RegisterNewServiceUserOutput = {
+  __typename?: 'RegisterNewServiceUserOutput';
+  id: Scalars['ID'];
+  email: Scalars['String'];
+  password: Scalars['String'];
 };
 
 export type RegisterNewUserInput = {
@@ -37248,7 +37513,8 @@ export type UserRelateToOneInput = {
 
 export enum UserTypeType {
   Staff = 'staff',
-  Resident = 'resident'
+  Resident = 'resident',
+  Service = 'service'
 }
 
 export type UserUpdateInput = {
