@@ -434,6 +434,8 @@
   "pages.condo.ticket.index.ResetFilters": "Reset",
   "pages.condo.ticket.select.group.Units": "Units",
   "pages.condo.ticket.select.group.Parking": "Parking",
+  "pages.condo.ticket.title.CanReadByResident": "The resident {canReadByResident} the ticket in the mobile application",
+  "pages.condo.ticket.title.ResidentCannotReadTicket": "does not see",
   "pages.condo.ticket.title.TicketInfo": "Task information",
   "pages.condo.ticket.title.UserInfo": "Resident information",
   "pages.condo.ticket.warning.modal.Title": "Do not save ticket?",

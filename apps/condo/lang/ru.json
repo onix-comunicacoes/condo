@@ -434,6 +434,8 @@
   "pages.condo.ticket.index.ResetFilters": "Сбросить",
   "pages.condo.ticket.select.group.Units": "Квартиры",
   "pages.condo.ticket.select.group.Parking": "Паркинг",
+  "pages.condo.ticket.title.CanReadByResident": "Житель {canReadByResident} заявку в моб. приложении",
+  "pages.condo.ticket.title.ResidentCannotReadTicket": "не видит",
   "pages.condo.ticket.title.TicketInfo": "Информация о заявке",
   "pages.condo.ticket.title.UserInfo": "Информация о жителе",
   "pages.condo.ticket.warning.modal.Title": "Не сохранять заявку?",
