@@ -40,13 +40,13 @@ export type AcquiringIntegration = {
   sender?: Maybe<SenderField>;
   /**  Name of `acquiring component`, which is set up by developer  */
   name?: Maybe<Scalars['String']>;
-  /**  Short acquiring description, that would be shown on settings card  */
+  /**  Short integration description, that would be shown on settings card  */
   shortDescription?: Maybe<Scalars['String']>;
   /**  Title of confirmation/details page of integration  */
   detailsTitle?: Maybe<Scalars['String']>;
   /**  Text of confirmation/details page of integration written in markdown  */
   detailsText?: Maybe<Scalars['String']>;
-  /**  Indicates whether this integration is hidden inside the CRM  */
+  /**  Indicates whether the integration is hidden inside the CRM  */
   isHidden?: Maybe<Scalars['Boolean']>;
   accessRights: Array<AcquiringIntegrationAccessRight>;
   _accessRightsMeta?: Maybe<_QueryMeta>;
@@ -58,7 +58,7 @@ export type AcquiringIntegration = {
   supportedBillingIntegrations: Array<BillingIntegration>;
   _supportedBillingIntegrationsMeta?: Maybe<_QueryMeta>;
   /**  Contains information about the default distribution of explicit fee. Each part is paid by the user on top of original amount if there is no part with the same name in the integration context. Otherwise, the part is ignored as it is paid by recipient  */
-  explicitFeeDistributionSchema: Array<FeeDistributionField>;
+  explicitFeeDistributionSchema?: Maybe<Array<FeeDistributionField>>;
   id: Scalars['ID'];
   v?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['String']>;
@@ -449,7 +449,7 @@ export type AcquiringIntegrationContext = {
   /**  The current state of the integration process. Some integration need to store past state here, additional data and etc.  */
   state?: Maybe<Scalars['JSON']>;
   /**  Contains information about the default distribution of implicit fee. Each part is paid by the recipient organization on deducted from payment amount. If part exists then explicit part with the same name from AcquiringIntegration.explicitFeeDistributionSchema is ignored  */
-  implicitFeeDistributionSchema: Array<FeeDistributionField>;
+  implicitFeeDistributionSchema?: Maybe<Array<FeeDistributionField>>;
   id: Scalars['ID'];
   v?: Maybe<Scalars['Int']>;
   createdAt?: Maybe<Scalars['String']>;
@@ -820,7 +820,7 @@ export type AcquiringIntegrationHistoryRecord = {
   name?: Maybe<Scalars['String']>;
   shortDescription?: Maybe<Scalars['String']>;
   detailsTitle?: Maybe<Scalars['String']>;
-  detailsText?: Maybe<Scalars['String']>;
+  detailsText?: Maybe<Scalars['JSON']>;
   isHidden?: Maybe<Scalars['Boolean']>;
   canGroupReceipts?: Maybe<Scalars['Boolean']>;
   hostUrl?: Maybe<Scalars['String']>;
@@ -844,7 +844,7 @@ export type AcquiringIntegrationHistoryRecordCreateInput = {
   name?: Maybe<Scalars['String']>;
   shortDescription?: Maybe<Scalars['String']>;
   detailsTitle?: Maybe<Scalars['String']>;
-  detailsText?: Maybe<Scalars['String']>;
+  detailsText?: Maybe<Scalars['JSON']>;
   isHidden?: Maybe<Scalars['Boolean']>;
   canGroupReceipts?: Maybe<Scalars['Boolean']>;
   hostUrl?: Maybe<Scalars['String']>;
@@ -873,7 +873,7 @@ export type AcquiringIntegrationHistoryRecordUpdateInput = {
   name?: Maybe<Scalars['String']>;
   shortDescription?: Maybe<Scalars['String']>;
   detailsTitle?: Maybe<Scalars['String']>;
-  detailsText?: Maybe<Scalars['String']>;
+  detailsText?: Maybe<Scalars['JSON']>;
   isHidden?: Maybe<Scalars['Boolean']>;
   canGroupReceipts?: Maybe<Scalars['Boolean']>;
   hostUrl?: Maybe<Scalars['String']>;
@@ -959,24 +959,10 @@ export type AcquiringIntegrationHistoryRecordWhereInput = {
   detailsTitle_not_ends_with_i?: Maybe<Scalars['String']>;
   detailsTitle_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   detailsTitle_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  detailsText?: Maybe<Scalars['String']>;
-  detailsText_not?: Maybe<Scalars['String']>;
-  detailsText_contains?: Maybe<Scalars['String']>;
-  detailsText_not_contains?: Maybe<Scalars['String']>;
-  detailsText_starts_with?: Maybe<Scalars['String']>;
-  detailsText_not_starts_with?: Maybe<Scalars['String']>;
-  detailsText_ends_with?: Maybe<Scalars['String']>;
-  detailsText_not_ends_with?: Maybe<Scalars['String']>;
-  detailsText_i?: Maybe<Scalars['String']>;
-  detailsText_not_i?: Maybe<Scalars['String']>;
-  detailsText_contains_i?: Maybe<Scalars['String']>;
-  detailsText_not_contains_i?: Maybe<Scalars['String']>;
-  detailsText_starts_with_i?: Maybe<Scalars['String']>;
-  detailsText_not_starts_with_i?: Maybe<Scalars['String']>;
-  detailsText_ends_with_i?: Maybe<Scalars['String']>;
-  detailsText_not_ends_with_i?: Maybe<Scalars['String']>;
-  detailsText_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  detailsText_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  detailsText?: Maybe<Scalars['JSON']>;
+  detailsText_not?: Maybe<Scalars['JSON']>;
+  detailsText_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  detailsText_not_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
   isHidden?: Maybe<Scalars['Boolean']>;
   isHidden_not?: Maybe<Scalars['Boolean']>;
   canGroupReceipts?: Maybe<Scalars['Boolean']>;
@@ -3434,7 +3420,7 @@ export type BillingIntegrationHistoryRecord = {
   name?: Maybe<Scalars['String']>;
   shortDescription?: Maybe<Scalars['String']>;
   detailsTitle?: Maybe<Scalars['String']>;
-  detailsText?: Maybe<Scalars['String']>;
+  detailsText?: Maybe<Scalars['JSON']>;
   detailsConfirmButtonText?: Maybe<Scalars['String']>;
   detailsInstructionButtonText?: Maybe<Scalars['String']>;
   detailsInstructionButtonLink?: Maybe<Scalars['String']>;
@@ -3463,7 +3449,7 @@ export type BillingIntegrationHistoryRecordCreateInput = {
   name?: Maybe<Scalars['String']>;
   shortDescription?: Maybe<Scalars['String']>;
   detailsTitle?: Maybe<Scalars['String']>;
-  detailsText?: Maybe<Scalars['String']>;
+  detailsText?: Maybe<Scalars['JSON']>;
   detailsConfirmButtonText?: Maybe<Scalars['String']>;
   detailsInstructionButtonText?: Maybe<Scalars['String']>;
   detailsInstructionButtonLink?: Maybe<Scalars['String']>;
@@ -3497,7 +3483,7 @@ export type BillingIntegrationHistoryRecordUpdateInput = {
   name?: Maybe<Scalars['String']>;
   shortDescription?: Maybe<Scalars['String']>;
   detailsTitle?: Maybe<Scalars['String']>;
-  detailsText?: Maybe<Scalars['String']>;
+  detailsText?: Maybe<Scalars['JSON']>;
   detailsConfirmButtonText?: Maybe<Scalars['String']>;
   detailsInstructionButtonText?: Maybe<Scalars['String']>;
   detailsInstructionButtonLink?: Maybe<Scalars['String']>;
@@ -3588,24 +3574,10 @@ export type BillingIntegrationHistoryRecordWhereInput = {
   detailsTitle_not_ends_with_i?: Maybe<Scalars['String']>;
   detailsTitle_in?: Maybe<Array<Maybe<Scalars['String']>>>;
   detailsTitle_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  detailsText?: Maybe<Scalars['String']>;
-  detailsText_not?: Maybe<Scalars['String']>;
-  detailsText_contains?: Maybe<Scalars['String']>;
-  detailsText_not_contains?: Maybe<Scalars['String']>;
-  detailsText_starts_with?: Maybe<Scalars['String']>;
-  detailsText_not_starts_with?: Maybe<Scalars['String']>;
-  detailsText_ends_with?: Maybe<Scalars['String']>;
-  detailsText_not_ends_with?: Maybe<Scalars['String']>;
-  detailsText_i?: Maybe<Scalars['String']>;
-  detailsText_not_i?: Maybe<Scalars['String']>;
-  detailsText_contains_i?: Maybe<Scalars['String']>;
-  detailsText_not_contains_i?: Maybe<Scalars['String']>;
-  detailsText_starts_with_i?: Maybe<Scalars['String']>;
-  detailsText_not_starts_with_i?: Maybe<Scalars['String']>;
-  detailsText_ends_with_i?: Maybe<Scalars['String']>;
-  detailsText_not_ends_with_i?: Maybe<Scalars['String']>;
-  detailsText_in?: Maybe<Array<Maybe<Scalars['String']>>>;
-  detailsText_not_in?: Maybe<Array<Maybe<Scalars['String']>>>;
+  detailsText?: Maybe<Scalars['JSON']>;
+  detailsText_not?: Maybe<Scalars['JSON']>;
+  detailsText_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
+  detailsText_not_in?: Maybe<Array<Maybe<Scalars['JSON']>>>;
   detailsConfirmButtonText?: Maybe<Scalars['String']>;
   detailsConfirmButtonText_not?: Maybe<Scalars['String']>;
   detailsConfirmButtonText_contains?: Maybe<Scalars['String']>;
@@ -27106,8 +27078,6 @@ export enum SortAcquiringIntegrationHistoryRecordsBy {
   ShortDescriptionDesc = 'shortDescription_DESC',
   DetailsTitleAsc = 'detailsTitle_ASC',
   DetailsTitleDesc = 'detailsTitle_DESC',
-  DetailsTextAsc = 'detailsText_ASC',
-  DetailsTextDesc = 'detailsText_DESC',
   IsHiddenAsc = 'isHidden_ASC',
   IsHiddenDesc = 'isHidden_DESC',
   CanGroupReceiptsAsc = 'canGroupReceipts_ASC',
@@ -27400,8 +27370,6 @@ export enum SortBillingIntegrationHistoryRecordsBy {
   ShortDescriptionDesc = 'shortDescription_DESC',
   DetailsTitleAsc = 'detailsTitle_ASC',
   DetailsTitleDesc = 'detailsTitle_DESC',
-  DetailsTextAsc = 'detailsText_ASC',
-  DetailsTextDesc = 'detailsText_DESC',
   DetailsConfirmButtonTextAsc = 'detailsConfirmButtonText_ASC',
   DetailsConfirmButtonTextDesc = 'detailsConfirmButtonText_DESC',
   DetailsInstructionButtonTextAsc = 'detailsInstructionButtonText_ASC',
